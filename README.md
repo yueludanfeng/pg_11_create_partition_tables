@@ -1,15 +1,15 @@
 # 说明
 
+##  使用前提：
+
+- 安装PG到/home/postgres/pgsql目录
+- PG版本>=11.0
+
 # create_sub_tables_with_8_hours.sh
 
 * 作用：postgres11创建分表，替代传统触发器创建分表，从而加快入库速度
 
   > 注意此脚本中创建的是8小时分表，如果要是用按天分表，需要修改代码
-
-* 使用前提：
-
-  * 安装PG到/home/postgres/pgsql目录
-  * PG版本>=11.0
 
 * 使用方法：
 

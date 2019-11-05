@@ -1,0 +1,2 @@
+# pg_11_create_partition_tables
+postgres11创建分表，替代传统触发器创建分表，从而加快入库速度

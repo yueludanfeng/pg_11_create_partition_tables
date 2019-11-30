@@ -1,11 +1,23 @@
 #!/bin/sh
 
-
-SUB_TABLES_FILE_8_hours=/usr/local/conf/partition_by_8_hours.conf
-DB_NAME=test
+SUB_TABLES_FILE_8_hours=/var/partition_by_8_hours.conf
+DB_NAME=postgres
 BIN_PSQL=/home/postgres/pgsql/bin/psql
 
-mkdir -p /usr/local/conf/
+
+# 注意1:
+# 需要实现已经在数据库中创建好了主表
+# CREATE TABLE test_partition( 
+# id serial,
+# user_id int,
+# create_time timestamp without time zone
+# ) partition by range(create_time);
+
+# 注意2:
+# 需要事项创建配置文件bk jl xuyc ilj ffbn d fubn tmxp jbqu 
+# vim /var/partition_by_8_hours.conf
+# test_partition
+
 
 # 获取数据库密码
 export_dbpasswd()
@@ -72,10 +84,15 @@ main()
     local next_month_end_date_with_duration=`date --date="$(date +%Y-%m-01) +2 month -1 day" '+%Y_%m_%d_03'`
 
     local current_date_with_duration="${start_date}_01"
-
+	
+	export_dbpasswd
+	
     while read -r line
 	do
         local tbl_name=`echo $line`
+		if [[ "${tbl_name}" = "" ]];then
+			exit 0
+		fi
         create_default_sub_table "${tbl_name}"
         while [[ "${current_date_with_duration}" < "${next_month_end_date_with_duration}" ]]
         do
